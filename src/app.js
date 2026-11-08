@@ -31,7 +31,8 @@ const { compterRequetes } = require("./middlewares/compteurMiddleware");
 const app = express();
 
 app.use(helmet({ crossOriginResourcePolicy: { policy: "cross-origin"}}));
-app.use(cors({ origin: "http://localhost:5173" }));
+const origines = (process.env.CLIENT_URL || "http://localhost:5173").split(",").map((o) => o.trim());
+app.use(cors({ origin: origines }));
 app.use(express.json());
 app.use("/uploads", express.static(path.join(__dirname, "../uploads")));
 
