@@ -1,0 +1,68 @@
+const express = require("express");
+const cors = require("cors");
+const path = require("path");
+const helmet = require("helmet");
+
+const userRoutes = require("./routes/userRoutes");
+const formationRoutes = require("./routes/formationRoutes");
+const entrepriseRoutes = require("./routes/entrepriseRoutes");
+const messageContactRoutes = require("./routes/messageContactRoutes");
+const documentRoutes = require("./routes/documentRoutes");
+const offreAlternanceRoutes = require("./routes/offreAlternanceRoutes");
+const inscriptionRoutes = require("./routes/inscriptionRoutes");
+const candidatureRoutes = require("./routes/candidatureRoutes");
+const coursRoutes = require("./routes/coursRoutes");
+const salleRoutes = require("./routes/salleRoutes");
+const absenceRoutes = require("./routes/absenceRoutes");
+const noteRoutes = require("./routes/noteRoutes");
+const conventionRoutes = require("./routes/conventionRoutes");
+const seanceRoutes = require("./routes/seanceRoutes");
+const paiementRoutes = require("./routes/paiementRoutes");
+const depenseRoutes = require("./routes/depenseRoutes");
+const conversationRoutes = require("./routes/conversationRoutes");
+const superAdminRoutes = require("./routes/superAdminRoutes");
+const dashboardRoutes = require("./routes/dashboardRoutes");
+const rendezVousRoutes = require("./routes/rendezVousRoutes");
+const contenuRoutes = require("./routes/contenuRoutes");
+const { compterRequetes } = require("./middlewares/compteurMiddleware");
+
+
+
+const app = express();
+
+app.use(helmet({ crossOriginResourcePolicy: { policy: "cross-origin"}}));
+app.use(cors({ origin: "http://localhost:5173" }));
+app.use(express.json());
+app.use("/uploads", express.static(path.join(__dirname, "../uploads")));
+
+app.use("/api/users", userRoutes);
+app.use("/api/formations", formationRoutes);
+app.use("/api/entreprises", entrepriseRoutes);
+app.use("/api/messages", messageContactRoutes);
+app.use("/api/documents", documentRoutes);
+app.use("/api/inscriptions", inscriptionRoutes);
+app.use("/api/candidatures", candidatureRoutes);
+app.use("/api/offres", offreAlternanceRoutes);
+app.use("/api/cours", coursRoutes);
+app.use("/api/salles", salleRoutes);
+app.use("/api/absences", absenceRoutes);
+app.use("/api/notes", noteRoutes);
+app.use("/api/conventions", conventionRoutes);
+app.use("/api/seances", seanceRoutes);
+app.use("/api/paiements", paiementRoutes);
+app.use("/api/depenses", depenseRoutes);
+app.use("/api/conversations", conversationRoutes);
+app.use("/api/super-admin", superAdminRoutes);
+app.use("/api", compterRequetes);
+app.use("/api/dashboard", dashboardRoutes);
+app.use("/api/rendez-vous", rendezVousRoutes);
+app.use("/api/contenus", contenuRoutes);
+
+
+app.get("/", (req, res) => {
+  res.json({
+    message: "API Backend fonctionne",
+  });
+});
+
+module.exports = app;
